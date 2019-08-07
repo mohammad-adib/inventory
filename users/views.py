@@ -12,38 +12,67 @@ def index(request):
     return render(request,'homepage/index.html')
 
 
-#register
+def retailers(request):
+    return render(request,'users/retailers.html')
 
-def register(request):
+def customers(request):
+    return render(request,'users/customers.html')
+
+#register retailers and customers
+
+def register_retailer(request):
     registered = False
     if request.method == "POST":
         user_form = UserForm(data=request.POST)
-        profile_form = UserProfileInfoForm(data=request.POST)
-        if user_form.is_valid() and profile_form.is_valid():
+        retailer_form = RetailerForm(data=request.POST)
+        if user_form.is_valid() and retailer_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
             user.save()
 
-            profile = profile_form.save(commit=False)
-            profile.user = user
+            retailer = retailer_form.save(commit=False)
+            retailer.user = user
 
-            if 'profile_pic' in request.FILES:
-                profile.profile_pic = request.FILES['profile_pic']
-
-            profile.save()
+  
+            retailer.save()
             registered = True
         else:
-            print(user_form.errors,profile_form.errors)
+            print(user_form.errors,retailer_form.errors)
     else:
         user_form = UserForm()
-        profile_form = UserProfileInfoForm()
+        retailer_form = RetailerForm()
 
-    return render(request,'relatedpages/registration.html',
+    return render(request,'users/register_retailer.html',
                                           {'user_form':user_form,
-                                           'profile_form':profile_form,
+                                           'retailer_form':retailer_form,
                                            'registered':registered})
 
+def register_customer(request):
+    registered = False
+    if request.method == "POST":
+        user_form = UserForm(data=request.POST)
+        customer_form = CustomerForm(data=request.POST)
+        if user_form.is_valid() and customer_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
 
+            customer = customer_form.save(commit=False)
+            customer.user = user
+
+  
+            customer.save()
+            registered = True
+        else:
+            print(user_form.errors,customer_form.errors)
+    else:
+        user_form = UserForm()
+        customer_form = CustomerForm()
+
+    return render(request,'users/register_customer.html',
+                                          {'user_form':user_form,
+                                           'customer_form':customer_form,
+                                           'registered':registered})
 
 
 #login
