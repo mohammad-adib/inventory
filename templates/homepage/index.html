@@ -1,0 +1,29 @@
+{% extends "homepage/base.html" %}
+{% block body_block %}
+
+<div class="container">
+  <div class="jumbotron">
+    <h1>خانه ساعت</h1>
+    {% if user.is_authenticated %}
+        <h2>Welcome {{ user.username }}!</h2>
+    {% else %}
+        <h2>به سیستم جامع فروش خانه ساعت خوش آمدید</h2>
+    {% endif %}
+  </div>
+</div>
+
+
+{% block javascripts %}
+{{ block.super }}
+{% load static %}
+
+<script src="{% static 'js/index.js' %}"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    index.init()
+  })
+</script>
+
+{% endblock %}
+
+{% endblock %}
