@@ -7,7 +7,7 @@
     {% if user.is_authenticated %}
         <h2>Welcome {{ user.username }}!</h2>
     {% else %}
-        <a class="navbar-link" href="#">Sign in</a>        
+        <a class="navbar-link" href="{% url 'users:login' %}">Sign in</a>        
     {% endif %}
   </div>
 </div>

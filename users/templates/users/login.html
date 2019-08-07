@@ -7,7 +7,7 @@
       <p><a id = 'home' href="{% url 'index' %}"></a></p>
       <p id = 'message-div'></p>
 
-        <form  method="post" action="{% url 'users:user_login' %}">
+        <form  method="post" action="{% url 'users:login' %}">
           {% csrf_token %}
           <label for="email">Email:</label>
           <input id = 'email' type="email" name="email" placeholder="Enter your mail">

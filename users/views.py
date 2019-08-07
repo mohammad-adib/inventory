@@ -18,34 +18,7 @@ def retailers(request):
 def customers(request):
     return render(request,'users/customers.html')
 
-#register retailers and customers
-
-def register_retailer(request):
-    registered = False
-    if request.method == "POST":
-        user_form = UserForm(data=request.POST)
-        retailer_form = RetailerForm(data=request.POST)
-        if user_form.is_valid() and retailer_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
-
-            retailer = retailer_form.save(commit=False)
-            retailer.user = user
-
-  
-            retailer.save()
-            registered = True
-        else:
-            print(user_form.errors,retailer_form.errors)
-    else:
-        user_form = UserForm()
-        retailer_form = RetailerForm()
-
-    return render(request,'users/register_retailer.html',
-                                          {'user_form':user_form,
-                                           'retailer_form':retailer_form,
-                                           'registered':registered})
+#register customers
 
 def register_customer(request):
     registered = False
@@ -82,7 +55,7 @@ def get_user(email):
     except User.DoesNotExist:
         return None
 
-def user_login(request):
+def login(request):
     loggedin = False
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -109,11 +82,9 @@ def user_login(request):
             'status':False,
             'message' : 'Your username and password did not mach. Try again' })
     else:
-        return render(request,'relatedpages/login.html',{})
+        return render(request,'users/login.html',{})
 
-@login_required
-def special(request):
-    return HttpResponse('You are Signeed in, Nice!')
+
 
 
 
