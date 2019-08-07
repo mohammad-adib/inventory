@@ -16,10 +16,11 @@
           <li><a class="navbar-link" href="{% url 'admin:index' %}">Admin</a></li>
 
           {% if user.is_authenticated %}
-            <li><a href="{% url 'logout' %}">Sign out</a></li>
+            <!-- <li><a href="{% url 'logout' %}">Sign out</a></li> -->
           {% else %}
-            <li><a class="navbar-link" href="{% url 'users:login' %}">Sign in</a></li>
-            <li><a class="navbar-link" href="{% url 'users:register' %}">Sign Up</a></li>
+            <li><a class="navbar-link" href="{% url 'users:customers' %}">Customers</a></li>
+            <li><a class="navbar-link" href="{% url 'users:retailers' %}">Retailers</a></li>
+
           {% endif %}
 
         </ul>
