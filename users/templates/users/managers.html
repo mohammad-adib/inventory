@@ -8,7 +8,6 @@
         <h2>Welcome {{ user.username }}!</h2>
     {% else %}
         <a class="navbar-link" href="{% url 'users:login' %}">Sign in</a> 
-        <a class="navbar-link" href="{% url 'users:register_customer' %}">Sign Up</a> 
     {% endif %}
   </div>
 </div>
