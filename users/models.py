@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import datetime
+from stores.models import Store
 
 class Retailer(models.Model):
     
@@ -10,6 +11,11 @@ class Retailer(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+    ######## R E L A T I O N S H I P S ########    
+
+    store = models.ForeignKey(Store,blank=True,on_delete=models.CASCADE,related_name='store')
 
 class Customer(models.Model):
     

@@ -93,5 +93,7 @@ def login(request):
 #logout part
 
 @login_required
-def user_logout(request):
+def logging_out(request):
     logout(request)
+    return HttpResponseRedirect(reverse('index'))
+
