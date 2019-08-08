@@ -17,8 +17,14 @@
 
           {% if user.is_authenticated %}
             <li><a href="{% url 'users:logout' %}">Sign out</a></li>
+
+                {% if user.myuser.is_retailer %}
+                    <li><a href="{% url 'users:logout' %}">Message Box</a></li>
+                    <li><a href="{% url 'users:logout' %}">My Store</a></li>
+                {% endif %}
+
           {% else %}
-            <li><a class="navbar-link" href="{% url 'users:customers' %}">Customers</a></li>
+            <li><a class="navbar-link" href="{% url 'users:managers' %}">Managers</a></li>
             <li><a class="navbar-link" href="{% url 'users:retailers' %}">Retailers</a></li>
 
           {% endif %}

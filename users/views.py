@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from users.forms import UserForm, CustomerForm, RetailerForm
+from .models import MyUser
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponseRedirect,HttpResponse, JsonResponse
@@ -15,10 +16,10 @@ def index(request):
 def retailers(request):
     return render(request,'users/retailers.html')
 
-def customers(request):
-    return render(request,'users/customers.html')
+def managers(request):
+    return render(request,'users/managers.html')
 
-#register customers
+#register managers
 
 def register_customer(request):
     registered = False
@@ -51,38 +52,35 @@ def register_customer(request):
 #login
 def get_user(email):
     try:
-        return User.objects.get(email=email.lower())
-    except User.DoesNotExist:
+        return MyUser.objects.get(email=email.lower())
+    except MyUser.DoesNotExist:
         return None
 
-def login(request):
+def user_login(request):
     loggedin = False
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
         username = get_user(email)
         user = authenticate(username=username,password=password)
+        
 
         if user:
             if user.is_active:
-                login(request,user)
-                return JsonResponse({
-                'status':True,
-                'message' : 'Wlcome {}'.format(username)})
+                login(request,user)            
                 loggedin = True
-                print(loggedin)
             else:
                 return JsonResponse({
                 'status':False,
                 'message' : 'You are noy activated'})
         else:
-            print('Someone tried to login and failed')
-            print('Email: {} and Password: {}'.format(email,password))
             return JsonResponse({
             'status':False,
             'message' : 'Your username and password did not mach. Try again' })
     else:
         return render(request,'users/login.html',{})
+
+    return HttpResponseRedirect(reverse('index'))
 
 
 
@@ -96,4 +94,3 @@ def login(request):
 def logging_out(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
-
